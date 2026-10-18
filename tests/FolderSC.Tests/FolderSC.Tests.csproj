@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <UseWPF>true</UseWPF>
     <RootNamespace>FolderSC.Tests</RootNamespace>
   </PropertyGroup>
 
@@ -17,11 +18,13 @@
 
   <ItemGroup>
     <Using Include="Xunit" />
+    <Using Include="System.IO" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\FolderSC.Core\FolderSC.Core.csproj" />
     <ProjectReference Include="..\..\src\FolderSC.Stub\FolderSC.Stub.csproj" />
+    <ProjectReference Include="..\..\src\FolderSC.UI\FolderSC.UI.csproj" />
   </ItemGroup>
 
 </Project>

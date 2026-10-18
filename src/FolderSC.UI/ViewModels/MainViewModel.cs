@@ -31,10 +31,14 @@ public class MainViewModel : ViewModelBase
     private string _statusMessage = string.Empty;
     private string? _lastGeneratedFilePath;
 
+    public MainViewModel() : this(null, null, null)
+    {
+    }
+
     public MainViewModel(
-        IPathNormalizer? pathNormalizer = null,
-        IGenerationOrchestrator? orchestrator = null,
-        IUserInteractionService? interactionService = null)
+        IPathNormalizer? pathNormalizer,
+        IGenerationOrchestrator? orchestrator,
+        IUserInteractionService? interactionService)
     {
         _pathNormalizer = pathNormalizer ?? new PathNormalizer();
         _orchestrator = orchestrator ?? new GenerationOrchestrator();

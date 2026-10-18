@@ -17,6 +17,17 @@ public class MainViewModelTests
     }
 
     [Fact]
+    public void ParameterlessConstructor_ExistsAndInstantiatesSuccessfully()
+    {
+        var constructor = typeof(MainViewModel).GetConstructor(Type.EmptyTypes);
+        Assert.NotNull(constructor);
+
+        var instance = Activator.CreateInstance<MainViewModel>();
+        Assert.NotNull(instance);
+        Assert.Equal(OutputFormat.Executable, instance.SelectedFormat);
+    }
+
+    [Fact]
     public void InitialState_HasExpectedDefaults()
     {
         var vm = CreateViewModel();

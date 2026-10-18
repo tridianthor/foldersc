@@ -5,8 +5,11 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>FolderSC.Stub</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FolderSC.Core\FolderSC.Core.csproj" />
+  </ItemGroup>
 
 </Project>

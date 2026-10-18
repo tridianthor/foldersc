@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\FolderSC.Core\FolderSC.Core.csproj" />
+    <ProjectReference Include="..\..\src\FolderSC.Stub\FolderSC.Stub.csproj" />
   </ItemGroup>
 
 </Project>

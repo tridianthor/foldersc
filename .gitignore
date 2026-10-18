@@ -1,6 +1,7 @@
-# Build results
+# Build and publish results
 **/[Bb]in/
 **/[Oo]bj/
+**/publish/
 
 # Visual Studio / Rider / VS Code cache
 .vs/

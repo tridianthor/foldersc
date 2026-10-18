@@ -1,8 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using FolderSC.Core.Models;
 
 namespace FolderSC.Core.Services;
+
+[JsonSerializable(typeof(RunnerPayload))]
+[JsonSourceGenerationOptions(
+    PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
+    PropertyNameCaseInsensitive = true,
+    WriteIndented = false)]
+internal partial class RunnerPayloadJsonContext : JsonSerializerContext
+{
+}
 
 /// <summary>
 /// Implements <see cref="IPayloadPacker"/> using the binary FSC1 format:
@@ -13,13 +23,6 @@ public class PayloadPacker : IPayloadPacker
     public static readonly byte[] MagicMarker = [(byte)'F', (byte)'S', (byte)'C', (byte)'1'];
     private const int HeaderSize = 8; // 4 bytes magic + 4 bytes length
 
-    private static readonly JsonSerializerOptions JsonOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        PropertyNameCaseInsensitive = true,
-        WriteIndented = false
-    };
-
     public byte[] Pack(RunnerPayload payload)
     {
         ArgumentNullException.ThrowIfNull(payload);
@@ -29,7 +32,7 @@ public class PayloadPacker : IPayloadPacker
             throw new ArgumentException("Target path cannot be empty or whitespace.", nameof(payload));
         }
 
-        byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes(payload, JsonOptions);
+        byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes(payload, RunnerPayloadJsonContext.Default.RunnerPayload);
         byte[] result = new byte[HeaderSize + jsonBytes.Length];
 
         // 1. Magic bytes
@@ -104,7 +107,7 @@ public class PayloadPacker : IPayloadPacker
         try
         {
             var jsonSpan = new ReadOnlySpan<byte>(binaryData, markerOffset + HeaderSize, payloadLength);
-            var deserialized = JsonSerializer.Deserialize<RunnerPayload>(jsonSpan, JsonOptions);
+            var deserialized = JsonSerializer.Deserialize(jsonSpan, RunnerPayloadJsonContext.Default.RunnerPayload);
 
             if (deserialized == null || string.IsNullOrWhiteSpace(deserialized.TargetPath))
             {
